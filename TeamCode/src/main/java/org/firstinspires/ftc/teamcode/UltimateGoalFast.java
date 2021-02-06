@@ -24,6 +24,21 @@ public class UltimateGoalFast extends AutonomousPrimeTest {
         initTfod();
         tfod.activate();
 
+        if (tfod != null) {
+            pause(1);
+            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (updatedRecognitions != null) {
+                telemetry.addData("# Object Detected", updatedRecognitions.size());
+                noLabel  = updatedRecognitions.size();
+                int i = 0;
+                for (Recognition recognition : updatedRecognitions) {
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+                    labelName = recognition.getLabel();
+                }
 
         mapObjects();
         waitForStart();
@@ -31,32 +46,6 @@ public class UltimateGoalFast extends AutonomousPrimeTest {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 //pause(2);
-                if (tfod != null) {
-                    pause(1);
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                        telemetry.addData("# Object Detected", updatedRecognitions.size());
-                        noLabel  = updatedRecognitions.size();
-                        int i = 0;
-                        for (Recognition recognition : updatedRecognitions) {
-                            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                    recognition.getLeft(), recognition.getTop());
-                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                    recognition.getRight(), recognition.getBottom());
-                            labelName = recognition.getLabel();
-                            
-                            /*if (labelName.equals("single")){
-                                forwardEncoder(160, 0.5);
-                            }
-                            else if (labelName.equals("quad")){
-                                forwardEncoder(160, 0.5);
-                            } 
-                            else if (noLabel == 0){
-                                forwardEncoder(160, 0.5);
-                            }*/
-                            
-                        } //POWER WAS ).53 FOR MOTORS
                         if (noLabel == 0){
                             wobbleLock();
                             startLaunch(0.42);
