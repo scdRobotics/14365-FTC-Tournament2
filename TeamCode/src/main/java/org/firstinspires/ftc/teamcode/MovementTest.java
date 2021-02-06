@@ -1,9 +1,9 @@
-/*package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.Map;
 
-// TODO: Due to code loss, add in real values instead of "?"- base code should be same
+// TODO: Test & fix values, add wobble grab support
 
 @Autonomous(name="MovementTest", group="linearOpMode")
 public class MovementTest extends AutonomousPrimeTest{
@@ -24,98 +24,102 @@ public class MovementTest extends AutonomousPrimeTest{
 
         if(version==0){
             startLaunch(0.42);
-            forwardEncoder(?, 1);
+            forwardEncoder(160, 1);
             zeroBotEncoder(1);
             pause(0.2);
             launchAdvanceFast();
-            strafeLeftEncoder(?, 1);
+            strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
             pause(0.2);
             launchAdvanceFast();
-            strafeLeftEncoder(?, 1);
+            strafeLeftEncoder(20, 1);
             zeroBotEncoder(1);
             pause(0.2);
-            launchAdvanceFast (?, 1);
+            launchAdvanceFast();
+            pause(0.2);
 
-            strafeRightEncoder(?, 1);
+            startLaunch(0.465);
+            strafeRightEncoder(87, 1);
             pause(0.2);
-            reverseEncoder(?, 1);
+            reverseEncoder(45, 1);
             pause(0.5);
             launchAdvanceFast();
-            reverseEncoder(?, 1);
+            reverseEncoder(7, 1);
             pause(0.5);
             launchAdvanceFast();
-            reverseEncoder(?, 1);
+            reverseEncoder(7, 1);
             pause(0.5);
             launchAdvanceFast ();
-            reverseEncoder(?, 1);
+            reverseEncoder(7, 1);
             pause(0.5);
             launchAdvanceFast();
             launchAdvanceFast();
             pause(0.2);
 
-            rightEncoder(?, 1);
+            rightEncoder(0.25, 1);
             pause(0.2);
-            forwardEncoder(?, 1);
+            forwardEncoder(180, 1);
             wobbleRelease();
             pause(0.25);
-            reverseEncoder(?, 1);
+            reverseEncoder(95, 1);
         }
         else if(version==1){
             startLaunch(0.42);
-            forwardEncoder(?, 1);
+            forwardEncoder(160, 1);
             zeroBotEncoder(1);
             pause(0.2);
             launchAdvanceFast();
-            strafeLeftEncoder(?, 1);
+            strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
             pause(0.2);
             launchAdvanceFast();
-            strafeLeftEncoder(?, 1);
+            strafeLeftEncoder(20, 1);
             zeroBotEncoder(1);
             pause(0.2);
-            launchAdvanceFast (?, 1);
+            launchAdvanceFast();
             pause(0.2);
 
-            strafeRightEncoder(?, 1);
+            startLaunch(0.465);
+            strafeRightEncoder(87, 1);
             pause(0.2);
-            reverseEncoder(?, 1);
+            reverseEncoder(45, 1);
             pause(0.5);
             launchAdvanceFast();
             pause(0.2);
 
-            forwardEncoder(?, 1);
+            forwardEncoder(120, 1);
             wobbleRelease();
             pause(0.25);
-            reverseEncoder(?, 1);
+            reverseEncoder(70, 1);
         }
         else if(version==2){
             startLaunch(0.42);
-            forwardEncoder(?, 1);
+            forwardEncoder(160, 1);
             zeroBotEncoder(1);
             pause(0.2);
             launchAdvanceFast();
-            strafeLeftEncoder(?, 1);
+            strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
             pause(0.2);
             launchAdvanceFast();
-            strafeLeftEncoder(?, 1);
+            strafeLeftEncoder(20, 1);
             zeroBotEncoder(1);
             pause(0.2);
-            launchAdvanceFast (?, 1);
-            pause(0.2);
-
-            strafeRightEncoder(?, 1);
-            pause(0.2);
-            reverseEncoder(?, 1);
-            pause(0.5);
             launchAdvanceFast();
             pause(0.2);
 
-            forwardEncoder(?, 1);
+            forwardEncoder(20, 1);
+            pause(0.2);
+            strafeRightEncoder(87, 1);
+            pause(0.2);
+            reverseEncoder(70, 1);
+            pause(3); //Grab wobble
+            leftEncoder(1.5, 1);
+            pause(0.2);
+            strafeLeftEncoder(120, 1);
             wobbleRelease();
-            pause(0.25);
-            reverseEncoder(?, 1);
+            pause(1.5);
+            strafeRightEncoder(60, 1);
         }
     }
-}*/
+}
