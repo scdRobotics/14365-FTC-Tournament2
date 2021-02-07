@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.Map;
 
-// TODO: Test & fix values, add wobble grab support
+// TODO: Add wobble grab support
 
 @Autonomous(name="MovementTestAndroidStudio", group="linearOpMode")
 public class MovementTest extends AutonomousPrimeTest{
