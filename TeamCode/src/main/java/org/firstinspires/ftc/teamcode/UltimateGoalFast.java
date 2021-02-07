@@ -29,7 +29,7 @@ public class UltimateGoalFast extends AutonomousPrimeTest {
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
             if (updatedRecognitions != null) {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
-                noLabel  = updatedRecognitions.size();
+                noLabel = updatedRecognitions.size();
                 int i = 0;
                 for (Recognition recognition : updatedRecognitions) {
                     telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
@@ -39,6 +39,8 @@ public class UltimateGoalFast extends AutonomousPrimeTest {
                             recognition.getRight(), recognition.getBottom());
                     labelName = recognition.getLabel();
                 }
+            }
+        }
 
         mapObjects();
         waitForStart();
@@ -197,12 +199,6 @@ public class UltimateGoalFast extends AutonomousPrimeTest {
                         
                     }
                 }
-            }
-        }
-
-        if (tfod != null) {
-            tfod.shutdown();
-        }
     }
 
     private void initVuforia() {
