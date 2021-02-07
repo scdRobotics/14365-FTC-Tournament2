@@ -27,26 +27,30 @@ public class MovementTest extends AutonomousPrimeTest{
             startLaunch(0.42);
             forwardEncoder(160, 1);
             zeroBotEncoder(1);
-            pause(0.2);
+            //pause(0.2);
             launchAdvanceFast();
             launchAdvanceFast();
             strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
-            pause(0.2);
+            pause(0.1);
             launchAdvanceFast();
             //launchAdvanceFast();
             strafeLeftEncoder(20, 1);
             zeroBotEncoder(1);
-            pause(0.2);
+            pause(0.1);
             launchAdvanceFast();
             //pause(0.2);
 
             intakeStart(1);
             startLaunch(0.4455);
-            strafeRightEncoder(87, 0.75);
+            //strafeRightEncoder(87, 0.75);
+            strafeRightEncoder(87, 1);
+
             zeroBotEncoder(1);
             pause(0.2);
-            reverseEncoder(45, 0.35);
+            //reverseEncoder(45, 0.35);
+            reverseEncoder(45, 0.4);
+
             zeroBotEncoder(1);
             pause(0.5);
             launchAdvanceFast();
@@ -54,6 +58,9 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.5);
             launchAdvanceFast();
             reverseEncoder(9, 0.5);
+
+            startLaunch(0.45);
+
             pause(0.5);
             launchAdvanceFast ();
             reverseEncoder(9, 0.5);
@@ -61,7 +68,7 @@ public class MovementTest extends AutonomousPrimeTest{
             launchAdvanceFast();
             pause(0.5);
             launchAdvanceFast();
-            pause(0.5);
+            pause(0.25);
             intakeEnd();
 
             rightEncoder(0.225, 1);
