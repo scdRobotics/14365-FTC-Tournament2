@@ -8,6 +8,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import java.util.List;
 
+// TODO: Add wobble support
+
 @Autonomous(name="USETHIS!!!!", group="linearOpMode")
 public class UltimateGoalFast extends AutonomousPrimeTest {
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
