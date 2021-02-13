@@ -162,6 +162,7 @@ public class DB_1_7 extends OpMode {
             zeroBotEncoder(1);
         }
 
+
         // <Driver 2>
         // CONTROLS:
         // left trigger:  slow down the launcher
@@ -181,12 +182,12 @@ public class DB_1_7 extends OpMode {
             launchPower = 0.421;
         }
 
-        if(gamepad2.a){
+        /*if(gamepad2.a){
             strafeLeftEncoder(19.0, 1.0);
             launch();
             strafeLeftEncoder(20.0, 1.0); //was 19.0
             launch();
-        }
+        }*/
 
         telemetry.addData("launchPower",launchPower);
         launchLeft.setPower(-(launchPower - (gamepad2.left_trigger / 2)));
@@ -213,30 +214,21 @@ public class DB_1_7 extends OpMode {
         }
 
         if(gamepad2.right_stick_y < 0.5){
-            grabberPos+=0.5;
+            grabberPos+=1.5;
             grabber.setTargetPosition((int)(grabberPos));
-            grabber.setPower(0.5);
-            grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         }
         if(gamepad2.right_stick_y > -0.5){
-            grabberPos-=0.5;
+            grabberPos-=1.5;
             grabber.setTargetPosition((int)(grabberPos));
-            grabber.setPower(0.5);
-            grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        if(gamepad2.right_stick_button){
-            if (latched) {
-                latched=false;
-            } else{
-                latched=true;
-            }
-        }
+        grabber.setPower(0.8);
+        grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        if(latched){
-            latch.setPosition(0.45);
+        if(gamepad2.left_trigger>0.05){
+            latch.setPosition(0.4);
         } else {
-            latch.setPosition(0.8);
+            latch.setPosition(0.9);
         }
     }
 
