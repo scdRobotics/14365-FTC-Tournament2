@@ -32,20 +32,15 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "SCRIMMAGE 1", group = "Current")
 
 public class DB_1_7 extends OpMode {
-    // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    // Create drive motor variables
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
 
-    // Create intake motor variable
-
     private DcMotor intake = null;
 
-    // Create launcher motor varibles
     private DcMotor launchLeft = null;
     private DcMotor launchRight = null;
 
@@ -59,12 +54,10 @@ public class DB_1_7 extends OpMode {
     private double pusherPos = 0.35;
     private Servo pusher = null;
 
+    protected DcMotorEx grabber = null;
     private Servo latch = null;
 
-    protected DcMotorEx grabber=null;
-
     double DriveSpeed=1;
-
 
     protected BNO055IMU imu;
     protected BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -74,47 +67,32 @@ public class DB_1_7 extends OpMode {
 
     protected final double countPerRotation=753.2;
 
-
     double grabberPos = 0;
-
-    //private VoltageSensor VoltageSensor = null;
-
-
 
     @Override
     public void init() {
         telemetry.addData("Status", "Initializing");
 
-        // Assign motor variables to HardwareMap motors
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
 
-        // Assign intake variable to HardwareMap motor
         intake = hardwareMap.get(DcMotor.class, "intake");
 
-        // Assign launcher variables to HardwareMap motors
         launchLeft = hardwareMap.get(DcMotor.class, "launchLeft");
         launchRight = hardwareMap.get(DcMotor.class, "launchRight");
 
-        // Assign pusher variable to HardwareMap CRServo
         pusher = hardwareMap.get(Servo.class, "intakeAdvance");
 
         grabber=hardwareMap.get(DcMotorEx.class,"grabber");
-
         latch=hardwareMap.get(Servo.class,"latch");
 
-        //VoltageSensor = hardwareMap.voltageSensor.get("launchLeft");
-
-
-        // Assign a default directon for the drive motors
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
-        // Assign a default direction for the launcher motors
         launchLeft.setDirection(DcMotor.Direction.FORWARD);
         launchRight.setDirection(DcMotor.Direction.FORWARD);
 
@@ -126,12 +104,7 @@ public class DB_1_7 extends OpMode {
         parameters.loggingEnabled      = false;
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-        //wait for gyro to calibrate
-        //commented out while we are NOT using to improve startup time
-
         initialAngle = getAngle();
-
-        // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
     }
 
@@ -151,14 +124,7 @@ public class DB_1_7 extends OpMode {
     @Override
     public void loop() {
 
-        //double Voltage = VoltageSensor.getVoltage();
-
-        //telemetry.addData("Voltage (Launch Left)", Voltage);
-
-        // Drive Controls
-
         // <Driver 1>
-
 
         telemetry.addData("Real Grabber position ",grabber.getCurrentPosition()); //jacob wanted this- arm
         telemetry.addData("Expected Grabber position ",grabberPos);
@@ -167,15 +133,12 @@ public class DB_1_7 extends OpMode {
         double strafe = gamepad1.left_stick_x;
         double yaw = gamepad1.right_stick_x;
 
-
-
         if(gamepad1.right_trigger >= 0.2) {
             DriveSpeed=0.5;
         }
         else{
             DriveSpeed=1;
         }
-
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -187,10 +150,10 @@ public class DB_1_7 extends OpMode {
         frontRight.setPower(-(norm + yaw - strafe)*DriveSpeed);
         backRight.setPower((-norm - yaw - strafe)*DriveSpeed);
 
-    /*telemetry.addData("frontLeft",(norm + strafe + yaw));
-    telemetry.addData("backLeft",(norm - strafe + yaw));
-    telemetry.addData("frontRight",(norm - strafe - yaw));
-    telemetry.addData("backRight",(norm + strafe - yaw));*/
+        /*telemetry.addData("frontLeft",(norm + strafe + yaw));
+        telemetry.addData("backLeft",(norm - strafe + yaw));
+        telemetry.addData("frontRight",(norm - strafe - yaw));
+        telemetry.addData("backRight",(norm + strafe - yaw));*/
 
         if (gamepad1.dpad_left) {
             initialAngle = getAngle();
@@ -199,19 +162,12 @@ public class DB_1_7 extends OpMode {
             zeroBotEncoder(1);
         }
 
-        // </Driver 1>
-
         // <Driver 2>
-
         // CONTROLS:
         // left trigger:  slow down the launcher
         // x:             run advancer
         // right bumper:  run intake backward
         // y:             KILL EVERYTHING
-
-        /*
-
-         */
 
         if(gamepad2.dpad_up) {
             if(launchPower < 0.75) {
@@ -233,22 +189,18 @@ public class DB_1_7 extends OpMode {
         }
 
         telemetry.addData("launchPower",launchPower);
-
         launchLeft.setPower(-(launchPower - (gamepad2.left_trigger / 2)));
         launchRight.setPower((launchPower - (gamepad2.left_trigger / 2)));
 
         if(!gamepad2.y) {
-
             launchLeft.setPower(-(launchPower - (gamepad1.left_trigger / 2)));
             launchRight.setPower((launchPower - (gamepad1.left_trigger / 2)));
-
             if(gamepad2.x || gamepad1.x) {
                 pusherPos = 0.2;
             } else {
                 pusherPos = 0.35;
             }
             pusher.setPosition(pusherPos);
-
             if(!gamepad2.left_bumper && !gamepad1.left_bumper) {
                 if(gamepad2.right_bumper) {
                     intake.setPower(-1);
@@ -273,7 +225,6 @@ public class DB_1_7 extends OpMode {
             grabber.setPower(0.5);
             grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-
         if(gamepad2.right_stick_button){
             if (latched) {
                 latched=false;
@@ -287,14 +238,7 @@ public class DB_1_7 extends OpMode {
         } else {
             latch.setPosition(0.8);
         }
-        //grabber.setMode(DcMotor.RunMode.RESET_ENCODERS);
-
-
-        //grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //grabber.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
-
-    // </Driver 2>
 
     /*
      * Code to run ONCE after the driver hits STOP
@@ -364,14 +308,12 @@ public class DB_1_7 extends OpMode {
         while (frontLeft.isBusy()){
 
         }
-
     }
     public void strafeLeftEncoder(double pos, double MotorPower){
         frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        //*** NOTE - need to make slight adjustment to front wheel because was pulling to left
 
         double cmOffset = pos/25;
 
@@ -422,10 +364,8 @@ public class DB_1_7 extends OpMode {
     public void launch(){
         pusher.setPosition(0.2);
         pause(1);
-        //pause(0.5);
         pusher.setPosition(0.35);
         pause(1);
-        //pause(0.5);
     }
     public void pause(double secs){
         ElapsedTime mRuntime = new ElapsedTime();
