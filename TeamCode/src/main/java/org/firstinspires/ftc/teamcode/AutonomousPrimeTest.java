@@ -271,21 +271,58 @@ public class AutonomousPrimeTest extends LinearOpMode {
     public void wobbleLock(){
         wobbleRelease.setPosition(0.15);
     }
-    public void wobbleGrab(double MotorPower){
-        telemetry.addData("Encoder value", grabber.getCurrentPosition());
+    public void wobbleGrabDown(double MotorPower){
         grabber.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        telemetry.addData("Encoder value", grabber.getCurrentPosition());
-        grabber.setTargetPosition((int)(50));
-        telemetry.addData("Encoder value", grabber.getCurrentPosition());
+        grabber.setTargetPosition((int)(-750));
         grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        telemetry.addData("Encoder value", grabber.getCurrentPosition());
         grabber.setPower(MotorPower);
-        telemetry.addData("Encoder value", grabber.getCurrentPosition());
-        while (opModeIsActive() && (grabber.isBusy())){
+        /*while (opModeIsActive() && (grabber.isBusy())){
             telemetry.addData("GB ",grabber.isBusy());
             telemetry.update();
-        }
+        }*/
     }
+    public void wobbleLatch(){
+        latch.setPosition(0.2);
+        pause(1);
+    }
+    public void wobbleLatchRelease(){
+        latch.setPosition(0.9);
+        pause(1);
+    }
+    /*public void reverseEncoderArm(double pos, double MotorPower){
+        frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+
+        double cmOffset = pos/25;
+
+        frontLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
+        frontRight.setTargetPosition((int)(-cmOffset*countPerRotation));
+        backLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
+        backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(MotorPower);
+        backLeft.setPower(MotorPower);
+        frontRight.setPower(MotorPower);
+        backRight.setPower(MotorPower);
+
+
+
+        while (opModeIsActive() && (frontLeft.isBusy() || frontRight.isBusy() || backLeft.isBusy() || backRight.isBusy())){
+
+            telemetry.addData("FL ",frontLeft.isBusy());
+            telemetry.addData("FR ",frontRight.isBusy());
+            telemetry.addData("BL ", backLeft.isBusy());
+            telemetry.addData("BR ",backRight.isBusy());
+            telemetry.update();
+        }
+    }*/
     public void forwardEncoder(double pos, double MotorPower){ //1 pos = 25 cm
         frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);

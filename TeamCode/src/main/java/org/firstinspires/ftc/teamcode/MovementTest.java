@@ -58,6 +58,7 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.5);
             launchAdvanceFast();
             reverseEncoder(9, 0.5);
+            startLaunch(0.4405); //go slower for last 2
 
             startLaunch(0.45);
 
@@ -71,7 +72,7 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.25);
             intakeEnd();
 
-            rightEncoder(0.225, 1);
+            rightEncoder(0.5, 1); //lighter turn
             pause(0.1);
             forwardEncoder(210, 1);
             wobbleRelease();
@@ -79,7 +80,64 @@ public class MovementTest extends AutonomousPrimeTest{
             reverseEncoder(95, 1);
         }
         else if(version==1){
+            wobbleLock();
             startLaunch(0.42);
+            forwardEncoder(160, 1);
+            zeroBotEncoder(1);
+            //pause(0.2);
+            launchAdvanceFast();
+            launchAdvanceFast();
+            strafeLeftEncoder(25, 1);
+            zeroBotEncoder(1);
+            pause(0.1);
+            launchAdvanceFast();
+            //launchAdvanceFast();
+            strafeLeftEncoder(20, 1);
+            zeroBotEncoder(1);
+            pause(0.1);
+            launchAdvanceFast();
+            //pause(0.2);
+
+            intakeStart(1);
+            startLaunch(0.4455);
+            //strafeRightEncoder(87, 0.75);
+            strafeRightEncoder(77, 1); //was 82
+
+            zeroBotEncoder(1);
+            pause(0.2);
+            //reverseEncoder(45, 0.35);
+            reverseEncoder(45, 1);
+
+            zeroBotEncoder(1);
+            pause(1);
+            launchAdvanceFast();
+            pause(0.25);
+            leftEncoder(0.35, 1); //was 0.375
+            pause(0.25);
+
+            forwardEncoder(115, 1); //was 105
+            pause(0.25);
+            wobbleRelease();
+            //pause(0.25);
+            wobbleGrabDown(1);
+            reverseEncoder(170, 1); //was 175
+            pause(0.5);
+            //reverseEncoder(10, 0.25);
+            //pause(0.25);
+            strafeRightEncoder(40, 0.25); //was 35
+            wobbleLatch();
+            //pause(0.75);
+            launchAdvanceFast();
+            //leftEncoder(0.25, 1);
+            pause(0.1);
+            forwardEncoder(140, 1); //was 160
+            pause(0.25);
+            leftEncoder(3.5, 1);
+            //reverseEncoder(150, 1);
+            wobbleLatchRelease();
+            pause(0.25);
+            forwardEncoder(20, 1);
+            /*startLaunch(0.42);
             wobbleLock();
             forwardEncoder(160, 1);
             zeroBotEncoder(1);
@@ -125,7 +183,7 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(2);
             rightEncoder(1.75, 1);
             pause(0.2);
-            strafeLeftEncoder(150, 1);
+            strafeLeftEncoder(150, 1);*/
         }
         else if(version==2){
             startLaunch(0.42);

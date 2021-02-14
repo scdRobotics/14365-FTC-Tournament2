@@ -51,141 +51,140 @@ public class UltimateGoalFast extends AutonomousPrimeTest {
             while (opModeIsActive()) {
                 //pause(2);
                         if (noLabel == 0){
-                            wobbleLock();
                             startLaunch(0.42);
-                            //forwardEncoder(80, 0.5);
-                            forwardEncoder(170, 0.75);
+                            forwardEncoder(160, 1);
+                            zeroBotEncoder(1);
+                            pause(0.2);
+                            launchAdvanceFast();
+                            strafeLeftEncoder(25, 1);
+                            zeroBotEncoder(1);
+                            pause(0.2);
+                            launchAdvanceFast();
+                            strafeLeftEncoder(20, 1);
+                            zeroBotEncoder(1);
+                            pause(0.2);
+                            launchAdvanceFast();
+                            pause(0.2);
+
+                            forwardEncoder(20, 1);
+                            pause(0.2);
+                            strafeRightEncoder(87, 1);
+                            pause(0.2);
+                            reverseEncoder(70, 1);
+                            pause(3); //Grab wobble
+                            leftEncoder(1.5, 1);
+                            pause(0.2);
+                            strafeLeftEncoder(120, 1);
                             wobbleRelease();
-                            reverseEncoder(10, 0.75);
-                            pause(0.25);
-                            //launchLoop(1,1);
-                            //zeroBotEncoder(1);
-                            strafeLeftEncoder(85, 0.75); //Was 95
-                            zeroBotEncoder(1);
-                            //zeroBotEncoder(1);
-                            
-                            launchAdvance(); //Was 0.4
-                            
-                            //launchLoop(1.5, 0.705);
-                            strafeLeftEncoder(20, 0.75); //Was 25
-                            zeroBotEncoder(1);
-                            //pause(1);
-                            
-                            launchAdvance(); //Was 0.45
-                            
-                            strafeLeftEncoder(20, 0.75); //Was 25
-                            zeroBotEncoder(1);
-                            //pause(1);
-                            
-                            launchAdvance(); //Was 0.4
-                            
-                            forwardEncoder(20, 0.75);
-                            endLaunch();
+                            pause(1.5);
+                            strafeRightEncoder(60, 1);
                             pause(100);
-                            
                         }
                         else if (labelName.equals("Single")){
-                            wobbleLock();
                             startLaunch(0.42);
-                            forwardEncoder(160, 0.75);
-                            pause(0.25);
-                            strafeLeftEncoder(85, 0.75);
+                            wobbleLock();
+                            forwardEncoder(160, 1);
                             zeroBotEncoder(1);
-                            launchAdvance();
-                            strafeLeftEncoder(20, 0.75);
+                            pause(0.2);
+                            launchAdvanceFast();
+                            launchAdvanceFast();
+                            strafeLeftEncoder(25, 1);
                             zeroBotEncoder(1);
-                            launchAdvance();
-                            strafeLeftEncoder(20, 0.75);
+                            pause(0.2);
+                            launchAdvanceFast();
+                            strafeLeftEncoder(20, 1);
                             zeroBotEncoder(1);
-                            launchAdvance();
-                            endLaunch();
-                            forwardEncoder(70, 0.75);
-                            strafeRightEncoder(50, 0.75);
+                            pause(0.2);
+                            launchAdvanceFast();
+                            pause(0.2);
+
+                            intakeStart(1);
+                            startLaunch(0.4455);
+                            strafeRightEncoder(87, 1);
+                            zeroBotEncoder(1);
+                            pause(0.2);
+                            reverseEncoder(45, 1);
+                            pause(0.5);
+                            launchAdvanceFast();
+                            pause(0.2);
+                            intakeEnd();
+
+                            forwardEncoder(120, 1);
+                            zeroBotEncoder(1);
+                            pause(0.1);
+                            strafeLeftEncoder(50, 1);
+                            zeroBotEncoder(1);
                             wobbleRelease();
-                            reverseEncoder(50, 0.75);
-                            pause(100);
-                            
-                            /*startLaunch(0.42);
-                            forwardEncoder(253, 0.75);
                             pause(0.25);
-                            //pause(1);
-                            strafeLeftEncoder(85, 0.75); //Was 95, 90
-                            wobbleRelease();
-                            //launchLoop(1,1);
+                            reverseEncoder(70, 1);
                             zeroBotEncoder(1);
-                            reverseEncoder(97, 0.75);
+                            pause(0.1);
+
+                            strafeRightEncoder(95, 1);
                             zeroBotEncoder(1);
-                            launchAdvance();
-                            //zeroBotEncoder(1);
-                            //strafeLeftEncoder(25, 0.5);
-                            
-                            //launchLoopFirst(0.42); //Was 0.45
-                            
-                            //launchLoop(1.5, 0.705);
-                            strafeLeftEncoder(25, 0.75); //Was 25
-                            zeroBotEncoder(1);
-                            launchAdvance();
-                            
-                            //launchLoopOther(0.42); //Was 0.45
-                            
-                            strafeLeftEncoder(20, 0.75); //Was 25
-                            zeroBotEncoder(0.5);
-                            launchAdvance();
-                            
-                            //launchLoopOther(0.42); //Was 0.45
-                            
-                            forwardEncoder(30, 0.75);
-                            endLaunch();*/
+                            pause(0.1);
+                            reverseEncoder(85, 1);
+                            pause(2);
+                            rightEncoder(1.75, 1);
+                            pause(0.2);
+                            strafeLeftEncoder(150, 1);
                             pause(100);
-                            
                         }
                         else if (labelName.equals("Quad")){
                             wobbleLock();
                             startLaunch(0.42);
-                            forwardEncoder(160, 0.75);
+                            forwardEncoder(160, 1);
+                            zeroBotEncoder(1);
+                            //pause(0.2);
+                            launchAdvanceFast();
+                            launchAdvanceFast();
+                            strafeLeftEncoder(25, 1);
+                            zeroBotEncoder(1);
+                            pause(0.1);
+                            launchAdvanceFast();
+                            //launchAdvanceFast();
+                            strafeLeftEncoder(20, 1);
+                            zeroBotEncoder(1);
+                            pause(0.1);
+                            launchAdvanceFast();
+                            //pause(0.2);
+
+                            intakeStart(1);
+                            startLaunch(0.4455);
+                            //strafeRightEncoder(87, 0.75);
+                            strafeRightEncoder(87, 1);
+
+                            zeroBotEncoder(1);
+                            pause(0.2);
+                            //reverseEncoder(45, 0.35);
+                            reverseEncoder(45, 0.4);
+
+                            zeroBotEncoder(1);
+                            pause(0.5);
+                            launchAdvanceFast();
+                            reverseEncoder(9, 0.5);
+                            pause(0.5);
+                            launchAdvanceFast();
+                            reverseEncoder(9, 0.5);
+
+                            startLaunch(0.45);
+
+                            pause(0.5);
+                            launchAdvanceFast ();
+                            reverseEncoder(9, 0.5);
+                            pause(0.5);
+                            launchAdvanceFast();
+                            pause(0.5);
+                            launchAdvanceFast();
                             pause(0.25);
-                            strafeLeftEncoder(85, 0.75);
-                            zeroBotEncoder(1);
-                            launchAdvance();
-                            strafeLeftEncoder(20, 0.75);
-                            zeroBotEncoder(1);
-                            launchAdvance();
-                            strafeLeftEncoder(20, 0.75);
-                            zeroBotEncoder(1);
-                            launchAdvance();
-                            endLaunch();
-                            forwardEncoder(130, 0.75);
-                            strafeRightEncoder(110, 0.75);
+                            intakeEnd();
+
+                            rightEncoder(0.225, 1);
+                            pause(0.1);
+                            forwardEncoder(210, 1);
                             wobbleRelease();
-                            reverseEncoder(100, 0.75);
-                            /*startLaunch(0.42);
-                            forwardEncoder(300, 0.75);
-                            zeroBotEncoder(1);
-                            wobbleRelease();
-                            reverseEncoder(140, 0.75);
-                            pause(0.25);
-                            //launchLoop(1,1);
-                            zeroBotEncoder(1);
-                            strafeLeftEncoder(90, 0.75); //Was 80
-                            zeroBotEncoder(1);
-                            //zeroBotEncoder(1);
-                            pause(0.25);//Was 87
-                            
-                            launchAdvance(); //Was 0.45
-                            
-                            //launchLoop(1.5, 0.705);
-                            strafeLeftEncoder(20, 0.75); //Was 32
-                            zeroBotEncoder(1);
-                            
-                            launchAdvance(); //Was 0.45
-                            
-                            strafeLeftEncoder(20, 0.75); //Was 30
-                            zeroBotEncoder(1);
-                            
-                            launchAdvance(); //Was 0.45
-                            
-                            forwardEncoder(30, 0.75);
-                            endLaunch();*/
+                            pause(0.1);
+                            reverseEncoder(95, 1);
                             pause(100);
                         } 
                         //String label = recognition.getLabel();
