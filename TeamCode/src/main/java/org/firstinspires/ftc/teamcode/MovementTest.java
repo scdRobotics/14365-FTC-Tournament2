@@ -126,16 +126,19 @@ public class MovementTest extends AutonomousPrimeTest{
             //pause(0.25);
             strafeRightEncoder(40, 0.25); //was 35
             wobbleLatch();
+            intakeEnd();
             //pause(0.75);
             launchAdvanceFast();
             //leftEncoder(0.25, 1);
             pause(0.1);
             forwardEncoder(140, 1); //was 160
             pause(0.1);
-            leftEncoder(3.5, 1);
+            rightEncoder(3.5, 1);
             //reverseEncoder(150, 1);
             wobbleLatchRelease();
-            pause(1);
+            pause(0.25);
+            forwardEncoder(10, 1);
+            //pause(1);
             //forwardEncoder(20, 1);
             /*startLaunch(0.42);
             wobbleLock();
@@ -210,10 +213,10 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.75);
 
             reverseEncoder(70, 1);
-            strafeRightEncoder(40, 0.25); //was 35
+            strafeRightEncoder(43, 0.25); //was 40
             wobbleLatch();
             forwardEncoder(50, 1);
-            rightEncoder(1.5, 1);
+            rightEncoder(2.5, 1);
             wobbleLatchRelease();
 
 
