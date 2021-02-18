@@ -5,7 +5,7 @@ import java.util.Map;
 
 // TODO: Add wobble grab support
 
-@Autonomous(name="MovementTestAndroidStudio", group="linearOpMode")
+@Autonomous(name="AutonomousTestCode", group="linearOpMode")
 public class MovementTest extends AutonomousPrimeTest{
     @Override
     public void runOpMode(){
@@ -16,7 +16,7 @@ public class MovementTest extends AutonomousPrimeTest{
         //launch speed second = 0.465
         //launch function is launchAdvanceFast
 
-        double version = 1;
+        double version = 2;
 
         //Version 0 is 4 rings
         //Version 1 is 1 ring
@@ -81,6 +81,7 @@ public class MovementTest extends AutonomousPrimeTest{
         }
         else if(version==1){
             wobbleLock();
+            intakeAdvance.setPosition(0.35);
             startLaunch(0.42);
             forwardEncoder(160, 1);
             zeroBotEncoder(1);
@@ -111,32 +112,33 @@ public class MovementTest extends AutonomousPrimeTest{
             zeroBotEncoder(1);
             pause(1);
             launchAdvanceFast();
-            pause(0.25);
+            pause(0.1);
             leftEncoder(0.35, 1); //was 0.375
+            intakeEnd();
             pause(0.1);
 
             forwardEncoder(115, 1); //was 105
             pause(0.1);
             wobbleRelease();
+            //intakeEnd();
             //pause(0.25);
             wobbleGrabDown(1);
-            reverseEncoder(170, 1); //was 175
+            reverseEncoder(165, 1); //was 175
             pause(0.5);
             //reverseEncoder(10, 0.25);
             //pause(0.25);
-            strafeRightEncoder(40, 0.25); //was 35
+            strafeRightEncoder(30, 0.25); //was 35
             wobbleLatch();
-            intakeEnd();
             //pause(0.75);
-            launchAdvanceFast();
+            //launchAdvanceFast();
             //leftEncoder(0.25, 1);
             pause(0.1);
             forwardEncoder(140, 1); //was 160
             pause(0.1);
-            rightEncoder(3.5, 1);
+            rightEncoder(4.25, 1); //was 3.5
             //reverseEncoder(150, 1);
             wobbleLatchRelease();
-            pause(0.25);
+            //pause(0.15);
             forwardEncoder(10, 1);
             //pause(1);
             //forwardEncoder(20, 1);
@@ -205,19 +207,29 @@ public class MovementTest extends AutonomousPrimeTest{
             zeroBotEncoder(1);
             pause(0.1);
             launchAdvanceFast();
+
             forwardEncoder(20, 1);
             pause(0.2);
-            strafeRightEncoder(87, 1);
+            strafeRightEncoder(112, 1); //was 127, 112
             pause(0.2);
             wobbleRelease();
             pause(0.75);
 
-            reverseEncoder(70, 1);
-            strafeRightEncoder(43, 0.25); //was 40
+            wobbleGrabDown(1);
+            reverseEncoder(115, 0.5); //was 70, 110
+            //strafeRightEncoder(43, 0.25); //was 40
+            strafeRightEncoder(15, 0.25);
+            pause(0.5);
             wobbleLatch();
-            forwardEncoder(50, 1);
-            rightEncoder(2.5, 1);
+            pause(1);
+            forwardEncoder(75, 1);
+            rightEncoder(5, 1); //was 2.5
             wobbleLatchRelease();
+            forwardEncoder(20, 1);
+            strafeRightEncoder(50, 1);
+            reverseEncoder(55, 1);
+
+            //strafeRightEncoder(10, 1)
 
 
             /*startLaunch(0.42);
