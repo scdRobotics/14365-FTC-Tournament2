@@ -174,8 +174,18 @@ public class DB_1_7 extends OpMode {
             if(launchPower < 0.75) {
                 launchPower += 0.00005;
             }
-        } else if (gamepad2.dpad_down) {
+        }
+        else if (gamepad2.dpad_down) {
             launchPower -= 0.00005;
+        }
+
+        else if(gamepad2.dpad_right) {
+            if(launchPower < 0.75) {
+                launchPower += 0.0005;
+            }
+        }
+        else if (gamepad2.dpad_left) {
+            launchPower -= 0.0005;
         }
 
         if(gamepad2.y) {
@@ -226,9 +236,13 @@ public class DB_1_7 extends OpMode {
         grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         if(gamepad2.left_trigger>0.05){
-            latch.setPosition(0.4);
+            latch.setPosition(0);
         } else {
-            latch.setPosition(0.9);
+            latch.setPosition(0.4);
+        }
+
+        if(gamepad2.right_stick_button){
+            //wobble
         }
     }
 

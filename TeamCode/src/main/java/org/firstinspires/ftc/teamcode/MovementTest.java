@@ -72,7 +72,7 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.25);
             intakeEnd();
 
-            rightEncoder(0.5, 1); //lighter turn
+            rightEncoder(0.2, 1); //lighter turn
             pause(0.1);
             forwardEncoder(210, 1);
             wobbleRelease();
