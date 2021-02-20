@@ -16,7 +16,7 @@ public class MovementTest extends AutonomousPrimeTest{
         //launch speed second = 0.465
         //launch function is launchAdvanceFast
 
-        double version = 1;
+        double version = 0;
 
         //Version 0 is 4 rings
         //Version 1 is 1 ring
@@ -99,12 +99,65 @@ public class MovementTest extends AutonomousPrimeTest{
             launchAdvanceFast();
             //pause(0.2);
 
-            intakeStart(1);
-            startLaunch(0.4455);
-            //strafeRightEncoder(87, 0.75);
-            strafeRightEncoder(77, 1); //was 82
 
+            //strafeRightEncoder(87, 0.75);
+
+            wobbleGrabDown(1);
+            forwardEncoder(75, 1);
+            pause(0.1);
+            strafeRightEncoder(50, 1); //was 55
+            wobbleRelease();
+            intakeStart(1);
+            startLaunch(0.45);
+            reverseEncoder(50, 1);
+            pause(0.1);
+
+            updateDist();
+
+            double rightWallDist=readRightDist-72; //was 30
+            rightWallDist=Math.abs(rightWallDist);
+            strafeRightEncoder(rightWallDist, 0.5);
+
+            //strafeRightEncoder(34, 1);
+            pause(0.1);
+            reverseEncoder(80, 1);
             zeroBotEncoder(1);
+            pause(1.25);
+            launchAdvanceFast();
+            intakeEnd();
+
+
+            updateDist();
+
+            rightWallDist=readRightDist-40; //was 30
+            rightWallDist=Math.abs(rightWallDist);
+            strafeRightEncoder(rightWallDist, 0.5);
+            pause(0.1);
+            reverseEncoder(37, 1);
+            updateDist();
+
+            double count = 0;
+
+            while(readRightDist>=10 && readBackDist >=30) {
+                strafeRightEncoder(2, 1);
+                updateDist();
+                count++;
+                if(count==5){
+                    break;
+                }
+            }
+            reverseEncoder(15, 0.25);
+            pause(0.1);
+            wobbleLatch();
+            pause(0.25);
+            forwardEncoder(175, 1);
+            rightEncoder(3, 1);
+            wobbleLatchRelease();
+            pause(0.2);
+            forwardEncoder(10, 1);
+
+
+            /*zeroBotEncoder(1);
             pause(0.1);
             //reverseEncoder(45, 0.35);
             reverseEncoder(45, 1);
@@ -121,25 +174,33 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.1);
             wobbleRelease();
 
+            wobbleGrabDown(1);
             reverseEncoder(100, 1);
-            pause(0.5);
             zeroBotEncoder(1);
             updateDist();
-            double rightWallDist=readRightDist-34.5;
+            double rightWallDist=readRightDist-40; //was 30
             rightWallDist=Math.abs(rightWallDist);
-            strafeRightEncoder(rightWallDist, 1);
+            strafeRightEncoder(rightWallDist, 0.5);
             pause(0.1);
             reverseEncoder(50, 1);
             updateDist();
-            while(readRightDist>=10 && readBackDist >=30){
+            while(readRightDist>=10 && readBackDist >=30) {
                 strafeRightEncoder(2, 1);
                 updateDist();
             }
-            wobbleGrabDown(1);
-            reverseEncoder(10, 0.25);
-            pause(1.5);
+            reverseEncoder(15, 0.25);
+            pause(0.1);
             wobbleLatch();
-            pause(5);
+            pause(0.25);
+            forwardEncoder(100, 1);
+            rightEncoder(3, 1);
+            wobbleLatchRelease();
+            pause(0.2);
+            forwardEncoder(10, 1);
+
+
+
+
 
 
 

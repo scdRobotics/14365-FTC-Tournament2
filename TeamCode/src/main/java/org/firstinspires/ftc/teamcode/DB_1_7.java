@@ -259,8 +259,7 @@ public class DB_1_7 extends OpMode {
         telemetry.addData("New ",newAngle);
         telemetry.addData("Diff ",Math.abs(newAngle - initialAngle));
         telemetry.update();
-        while (Math.abs(newAngle - initialAngle) > 3){
-
+        while (Math.abs(newAngle - initialAngle) > 1){
             telemetry.addData("Zerobot Adj Initial ",initialAngle);
             telemetry.addData("New ",newAngle);
             telemetry.addData("Diff ",Math.abs(newAngle - initialAngle));
