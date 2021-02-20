@@ -70,6 +70,11 @@ public class AutonomousPrimeTest extends LinearOpMode {
 
     protected Servo wobbleRelease;
 
+    protected DistanceSensor backDist;
+    protected double readBackDist;
+
+    protected DistanceSensor rightDist;
+    protected double readRightDist;
 
     public void mapObjects(){
         telemetry.addData("Status","Initialized");
@@ -87,6 +92,12 @@ public class AutonomousPrimeTest extends LinearOpMode {
 
         grabber=hardwareMap.get(DcMotorEx.class,"grabber");
         latch=hardwareMap.get(Servo.class,"latch");
+
+        backDist=hardwareMap.get(DistanceSensor.class, "backDist");
+        readBackDist=backDist.getDistance(DistanceUnit.CM);
+
+        rightDist=hardwareMap.get(DistanceSensor.class, "rightDist");
+        readRightDist=backDist.getDistance(DistanceUnit.CM);
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -112,6 +123,8 @@ public class AutonomousPrimeTest extends LinearOpMode {
         initialAngle = getAngle();
 
     }
+
+
 
     public double getAngle(){
         Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -461,6 +474,51 @@ public class AutonomousPrimeTest extends LinearOpMode {
 
         }
     }
+    public void updateDist(){
+        readBackDist=backDist.getDistance(DistanceUnit.CM);
+        readRightDist=rightDist.getDistance(DistanceUnit.CM);
+        telemetry.addData("Back Dist, ",readBackDist);
+        telemetry.addData("Right Dist, ",readRightDist);
+        telemetry.update();
+    }
+    /*public void strafeRightDistCheck(double MotorPower){
+        updateDist();
+        while(readDist>=50){
+            frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+            backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+            frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+            backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+
+            double cmOffset = 10/25;
+
+            frontLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
+            frontRight.setTargetPosition((int)(cmOffset*countPerRotation));
+            backLeft.setTargetPosition((int)(cmOffset*countPerRotation));
+            backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
+
+            launchLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            launchRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            backRight.setPower(MotorPower);
+            frontRight.setPower(MotorPower);
+            backLeft.setPower(MotorPower);
+            frontLeft.setPower(MotorPower);
+
+            while (opModeIsActive() && frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() && readDist>=50){
+                telemetry.addData("FL ",frontLeft.isBusy());
+                telemetry.addData("FR ",frontRight.isBusy());
+                telemetry.addData("BL ", backLeft.isBusy());
+                telemetry.addData("BR ",backRight.isBusy());
+                telemetry.update();
+            }
+            break;
+        }
+    }*/
     public void strafeLeftEncoderCharge(double pos, double MotorPower){
         frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
