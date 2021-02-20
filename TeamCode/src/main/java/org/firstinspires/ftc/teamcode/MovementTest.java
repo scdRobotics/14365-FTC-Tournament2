@@ -16,7 +16,7 @@ public class MovementTest extends AutonomousPrimeTest{
         //launch speed second = 0.465
         //launch function is launchAdvanceFast
 
-        double version = 2;
+        double version = 1;
 
         //Version 0 is 4 rings
         //Version 1 is 1 ring
