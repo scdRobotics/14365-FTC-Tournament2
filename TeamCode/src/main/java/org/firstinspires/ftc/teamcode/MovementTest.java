@@ -16,7 +16,7 @@ public class MovementTest extends AutonomousPrimeTest{
         //launch speed second = 0.465
         //launch function is launchAdvanceFast
 
-        double version = 0;
+        double version = 1;
 
         //Version 0 is 4 rings
         //Version 1 is 1 ring
@@ -85,9 +85,15 @@ public class MovementTest extends AutonomousPrimeTest{
             startLaunch(0.42);
             forwardEncoder(160, 1);
             zeroBotEncoder(1);
+
+            updateDist();
+
+            double rightWallDist=readRightDist-115; //was 30
+            //rightWallDist=Math.abs(rightWallDist);
+            strafeRightEncoder(rightWallDist, 0.5);
             //pause(0.2);
             launchAdvanceFast();
-            launchAdvanceFast();
+            //launchAdvanceFast();
             strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
             pause(0.1);
@@ -102,6 +108,7 @@ public class MovementTest extends AutonomousPrimeTest{
 
             //strafeRightEncoder(87, 0.75);
 
+            intakeAdvance.setPosition(0.35);
             wobbleGrabDown(1);
             forwardEncoder(75, 1);
             pause(0.1);
@@ -114,7 +121,7 @@ public class MovementTest extends AutonomousPrimeTest{
 
             updateDist();
 
-            double rightWallDist=readRightDist-72; //was 30
+            rightWallDist=readRightDist-72; //was 30
             rightWallDist=Math.abs(rightWallDist);
             strafeRightEncoder(rightWallDist, 0.5);
 
@@ -122,16 +129,19 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.1);
             reverseEncoder(80, 1);
             zeroBotEncoder(1);
-            pause(1.25);
+            pause(0.5); //was 1.25
             launchAdvanceFast();
             intakeEnd();
 
 
             updateDist();
-
-            rightWallDist=readRightDist-40; //was 30
-            rightWallDist=Math.abs(rightWallDist);
-            strafeRightEncoder(rightWallDist, 0.5);
+            if(rightWallDist>500){
+                strafeRightEncoder(15, 1);
+            } else{
+                rightWallDist=readRightDist-40; //was 30
+                rightWallDist=Math.abs(rightWallDist);
+                strafeRightEncoder(rightWallDist, 0.5);
+            }
             pause(0.1);
             reverseEncoder(37, 1);
             updateDist();
@@ -139,22 +149,28 @@ public class MovementTest extends AutonomousPrimeTest{
             double count = 0;
 
             while(readRightDist>=10 && readBackDist >=30) {
-                strafeRightEncoder(2, 1);
+                strafeRightEncoder(3, 1);
                 updateDist();
                 count++;
                 if(count==5){
                     break;
                 }
             }
-            reverseEncoder(15, 0.25);
-            pause(0.1);
+            //updateDist();
+            reverseEncoder(5, 0.25);
+            strafeRightEncoder(1, 1);
+            //reverseEncoder(15, 0.25);
+            //pause(0.1);
             wobbleLatch();
-            pause(0.25);
-            forwardEncoder(175, 1);
-            rightEncoder(3, 1);
+            //pause(0.25);
+            wobbleGrabUp(1);
+            forwardEncoder(145, 1); //was 175
+            pause(0.1);
+            rightEncoder(3.35, 1);
             wobbleLatchRelease();
-            pause(0.2);
+            //pause(0.2);
             forwardEncoder(10, 1);
+            wobbleGrabUpLarge(1);
 
 
             /*zeroBotEncoder(1);

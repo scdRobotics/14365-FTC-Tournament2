@@ -277,9 +277,14 @@ public class AutonomousPrimeTest extends LinearOpMode {
         pause(0.55);
         intakeAdvance.setPosition(0.35);
     }
+    public void launchAdvanceFinal(){
+        intakeAdvance.setPosition(0.2);
+        //pause(0.55);
+        //intakeAdvance.setPosition(0.35);
+    }
     public void wobbleRelease() {
         wobbleRelease.setPosition(0.6);
-        pause(1.5);
+        pause(0.2);
     }
     public void wobbleLock(){
         wobbleRelease.setPosition(0.15);
@@ -294,13 +299,32 @@ public class AutonomousPrimeTest extends LinearOpMode {
             telemetry.update();
         }*/
     }
+    public void wobbleGrabUp(double MotorPower){
+        grabber.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        grabber.setTargetPosition((int)(75));
+        grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        grabber.setPower(MotorPower);
+        /*while (opModeIsActive() && (grabber.isBusy())){
+            telemetry.addData("GB ",grabber.isBusy());
+            telemetry.update();
+        }*/
+    }public void wobbleGrabUpLarge(double MotorPower){
+        grabber.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        grabber.setTargetPosition((int)(475));
+        grabber.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        grabber.setPower(MotorPower);
+        /*while (opModeIsActive() && (grabber.isBusy())){
+            telemetry.addData("GB ",grabber.isBusy());
+            telemetry.update();
+        }*/
+    }
     public void wobbleLatch(){
         latch.setPosition(0);
-        pause(1);
+        pause(0.5);
     }
     public void wobbleLatchRelease(){
         latch.setPosition(0.3);
-        pause(1);
+        pause(0.5);
     }
     /*public void reverseEncoderArm(double pos, double MotorPower){
         frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
