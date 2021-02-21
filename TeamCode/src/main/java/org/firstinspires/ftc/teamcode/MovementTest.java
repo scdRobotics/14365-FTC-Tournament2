@@ -16,7 +16,7 @@ public class MovementTest extends AutonomousPrimeTest{
         //launch speed second = 0.465
         //launch function is launchAdvanceFast
 
-        double version = 1;
+        double version = 2;
 
         //Version 0 is 4 rings
         //Version 1 is 1 ring
@@ -292,15 +292,20 @@ public class MovementTest extends AutonomousPrimeTest{
         }
         else if(version==2){
             wobbleLock();
+            intakeAdvance.setPosition(0.35);
             startLaunch(0.42);
             forwardEncoder(160, 1);
             zeroBotEncoder(1);
+            updateDist();
+            double rightWallDist=readRightDist-115; //was 30
+            //rightWallDist=Math.abs(rightWallDist);
+            strafeRightEncoder(rightWallDist, 0.5);
             //pause(0.2);
-            launchAdvanceFast();
+            //launchAdvanceFast();
             launchAdvanceFast();
             strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
-            pause(0.1);
+            pause(0.3); //was 0.2
             launchAdvanceFast();
             //launchAdvanceFast();
             strafeLeftEncoder(20, 1);
@@ -314,16 +319,27 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.2);
             wobbleRelease();
             pause(0.75);
+            zeroBotEncoder(1);
 
             wobbleGrabDown(1);
-            reverseEncoder(120.35, 0.5); //was 70, 118.35
+            reverseEncoder(115, 0.5); //was 70, 118.35
             //strafeRightEncoder(43, 0.25); //was 40
-            strafeRightEncoder(15, 0.25);
+            double count = 0;
+            while(readRightDist>=10 && readBackDist >=30) {
+                strafeRightEncoder(3, 1);
+                updateDist();
+                count++;
+                if(count==13){
+                    break;
+                }
+            }
             pause(0.5);
+            //reverseEncoder(5, 1);
             wobbleLatch();
             pause(1);
-            forwardEncoder(75, 1);
-            rightEncoder(4, 1); //was 5
+            wobbleGrabUp(1);
+            forwardEncoder(85, 1);
+            rightEncoder(5, 1); //was 5
             wobbleLatchRelease();
             forwardEncoder(20, 1);
             strafeRightEncoder(50, 1);
