@@ -16,7 +16,7 @@ public class MovementTest extends AutonomousPrimeTest{
         //launch speed second = 0.465
         //launch function is launchAdvanceFast
 
-        double version = 2;
+        double version = 0;
 
         //Version 0 is 4 rings
         //Version 1 is 1 ring
@@ -24,12 +24,17 @@ public class MovementTest extends AutonomousPrimeTest{
 
         if(version==0){
             wobbleLock();
+            intakeAdvance.setPosition(0.35);
             startLaunch(0.42);
             forwardEncoder(160, 1);
             zeroBotEncoder(1);
+            updateDist();
+            double rightWallDist=readRightDist-115; //was 30
+            //rightWallDist=Math.abs(rightWallDist);
+            strafeRightEncoder(rightWallDist, 0.5);
             //pause(0.2);
             launchAdvanceFast();
-            launchAdvanceFast();
+            //launchAdvanceFast();
             strafeLeftEncoder(25, 1);
             zeroBotEncoder(1);
             pause(0.1);
@@ -48,6 +53,15 @@ public class MovementTest extends AutonomousPrimeTest{
 
             zeroBotEncoder(1);
             pause(0.2);
+            /*updateDist();
+            if(rightWallDist>500){
+                //strafeRightEncoder(15, 1);
+            } else{
+                rightWallDist=readRightDist-40; //was 30
+                //rightWallDist=Math.abs(rightWallDist);
+                strafeRightEncoder(rightWallDist, 0.5);
+            }*/
+            //pause(0.1);
             //reverseEncoder(45, 0.35);
             reverseEncoder(45, 0.4);
 
