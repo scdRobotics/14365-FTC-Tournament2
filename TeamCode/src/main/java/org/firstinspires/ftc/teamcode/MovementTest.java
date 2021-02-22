@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import java.util.Map;
-
-// TODO: Add wobble grab support
 
 @Autonomous(name="AutonomousTestCode", group="linearOpMode")
-public class MovementTest extends AutonomousPrimeTest{
+public class MovementTest extends AutonomousPrime2020 {
     @Override
     public void runOpMode(){
         mapObjects();
@@ -191,7 +188,6 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.1);
             //reverseEncoder(45, 0.35);
             reverseEncoder(45, 1);
-
             zeroBotEncoder(1);
             pause(1);
             launchAdvanceFast();
@@ -199,11 +195,9 @@ public class MovementTest extends AutonomousPrimeTest{
             leftEncoder(0.35, 1); //was 0.375
             intakeEnd();
             pause(0.1);
-
             forwardEncoder(115, 1); //was 105
             pause(0.1);
             wobbleRelease();
-
             wobbleGrabDown(1);
             reverseEncoder(100, 1);
             zeroBotEncoder(1);
@@ -227,13 +221,6 @@ public class MovementTest extends AutonomousPrimeTest{
             wobbleLatchRelease();
             pause(0.2);
             forwardEncoder(10, 1);
-
-
-
-
-
-
-
             //intakeEnd();
             //pause(0.25);
             /*wobbleGrabDown(1);
@@ -272,7 +259,6 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.2);
             launchAdvanceFast();
             pause(0.2);
-
             intakeStart(1);
             startLaunch(0.4455);
             strafeRightEncoder(87, 1);
@@ -283,7 +269,6 @@ public class MovementTest extends AutonomousPrimeTest{
             launchAdvanceFast();
             pause(0.2);
             intakeEnd();
-
             forwardEncoder(120, 1);
             zeroBotEncoder(1);
             pause(0.1);
@@ -294,7 +279,6 @@ public class MovementTest extends AutonomousPrimeTest{
             reverseEncoder(70, 1);
             zeroBotEncoder(1);
             pause(0.1);
-
             strafeRightEncoder(95, 1);
             zeroBotEncoder(1);
             pause(0.1);
@@ -376,7 +360,6 @@ public class MovementTest extends AutonomousPrimeTest{
             pause(0.2);
             launchAdvanceFast();
             pause(0.2);
-
             forwardEncoder(20, 1);
             pause(0.2);
             strafeRightEncoder(87, 1);

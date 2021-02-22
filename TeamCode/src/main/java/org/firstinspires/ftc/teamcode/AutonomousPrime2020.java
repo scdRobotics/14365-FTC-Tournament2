@@ -34,8 +34,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 @Disabled
-@Autonomous(name="AutonomousPrimeTest", group="Linear Opmode")
-public class AutonomousPrimeTest extends LinearOpMode {
+@Autonomous(name="AutonomousPrime2020", group="Linear Opmode")
+public class AutonomousPrime2020 extends LinearOpMode {
 
     protected DcMotorEx frontLeft=null;
     protected DcMotorEx frontRight=null;
@@ -331,28 +331,20 @@ public class AutonomousPrimeTest extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
         backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-
         double cmOffset = pos/25;
-
         frontLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
         frontRight.setTargetPosition((int)(-cmOffset*countPerRotation));
         backLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
         backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
-
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         frontLeft.setPower(MotorPower);
         backLeft.setPower(MotorPower);
         frontRight.setPower(MotorPower);
         backRight.setPower(MotorPower);
-
-
-
         while (opModeIsActive() && (frontLeft.isBusy() || frontRight.isBusy() || backLeft.isBusy() || backRight.isBusy())){
-
             telemetry.addData("FL ",frontLeft.isBusy());
             telemetry.addData("FR ",frontRight.isBusy());
             telemetry.addData("BL ", backLeft.isBusy());
@@ -512,27 +504,21 @@ public class AutonomousPrimeTest extends LinearOpMode {
             backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
             frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
             backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-
             double cmOffset = 10/25;
-
             frontLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
             frontRight.setTargetPosition((int)(cmOffset*countPerRotation));
             backLeft.setTargetPosition((int)(cmOffset*countPerRotation));
             backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
-
             launchLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             launchRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
             frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             backRight.setPower(MotorPower);
             frontRight.setPower(MotorPower);
             backLeft.setPower(MotorPower);
             frontLeft.setPower(MotorPower);
-
             while (opModeIsActive() && frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() && readDist>=50){
                 telemetry.addData("FL ",frontLeft.isBusy());
                 telemetry.addData("FR ",frontRight.isBusy());

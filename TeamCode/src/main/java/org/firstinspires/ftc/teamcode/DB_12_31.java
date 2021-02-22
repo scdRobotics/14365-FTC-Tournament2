@@ -9,8 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-// TODO: Add wobble arm support
-
 @TeleOp(name = "Happy new year (DB_12_31)", group = "Current")
 
 public class DB_12_31 extends OpMode {
@@ -34,7 +32,7 @@ public class DB_12_31 extends OpMode {
   private boolean pressed = false;
 
   private double launchPower = 0.45;
-  
+
   private double pusherPos = 0.35;
   private Servo pusher = null;
 
@@ -90,7 +88,7 @@ public class DB_12_31 extends OpMode {
     double norm = -gamepad1.left_stick_y;
     double strafe = gamepad1.left_stick_x;
     double yaw = gamepad1.right_stick_x;
-    
+
     telemetry.addData("norm",norm);
     telemetry.addData("strafe",strafe);
     telemetry.addData("yaw",yaw);
@@ -104,16 +102,16 @@ public class DB_12_31 extends OpMode {
     telemetry.addData("backLeft",(norm - strafe + yaw));
     telemetry.addData("frontRight",(norm - strafe - yaw));
     telemetry.addData("backRight",(norm + strafe - yaw));
-    
+
     if(gamepad1.dpad_up) {
       launchPower += 0.005;
     } else if (gamepad1.dpad_down) {
       launchPower -= 0.005;
     }
-    
+
     telemetry.addData("launchPower",launchPower);
-  
-    
+
+
     if(!gamepad1.y) {
 
       launchLeft.setPower(-(launchPower - (gamepad1.left_trigger / 2)));
@@ -125,7 +123,7 @@ public class DB_12_31 extends OpMode {
         pusherPos = 0.35;
       }
       pusher.setPosition(pusherPos);
-      
+
       if(gamepad1.right_bumper) {
         intake.setPower(-1);
       } else {
@@ -135,8 +133,8 @@ public class DB_12_31 extends OpMode {
   }
 
   /*
-     * Code to run ONCE after the driver hits STOP
-     */
+   * Code to run ONCE after the driver hits STOP
+   */
   @Override
   public void stop() {}
 

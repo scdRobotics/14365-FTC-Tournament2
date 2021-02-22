@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -10,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import java.util.List;
 
 @Autonomous(name="ComputerVisionTest", group="linearOpMode")
-public class ComputerVisionTest extends AutonomousPrimeTest {
+public class ComputerVisionTest extends AutonomousPrime2020 {
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
@@ -31,7 +30,7 @@ public class ComputerVisionTest extends AutonomousPrimeTest {
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
-                pause(2);
+                //pause(2);
                 if (tfod != null) {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
@@ -45,13 +44,13 @@ public class ComputerVisionTest extends AutonomousPrimeTest {
                             telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                     recognition.getRight(), recognition.getBottom());
                             labelName = recognition.getLabel();
-                            
+
                             /*if (labelName.equals("single")){
                                 forwardEncoder(160, 0.5);
                             }
                             else if (labelName.equals("quad")){
                                 forwardEncoder(160, 0.5);
-                            } 
+                            }
                             else if (noLabel == 0){
                                 forwardEncoder(160, 0.5);
                             }*/
@@ -65,18 +64,18 @@ public class ComputerVisionTest extends AutonomousPrimeTest {
                         }
                         else if (labelName.equals("Quad")){
                             //forwardEncoder(120, 0.5);
-                        } 
+                        }
                         //String label = recognition.getLabel();
                         telemetry.update();
                         /* if(label == "single"){
-                            
-                        } 
+
+                        }
                         else if (label == "quad"){
-                            
+
                         } else{
-                            
+
                         }*/
-                        
+
                     }
                 }
             }
@@ -135,7 +134,6 @@ public class ComputerVisionTest extends AutonomousPrimeTest {
         -Easier points in beginning (if fails later, have more points still)
         OPTION ONE CONS
         -More time to go back for wobble and drop it off (TIME CONCERN)
-
         OPTION TWO PROS
         -Faster and more fluid
         -Still gets same amount of points as option one but with chance to pick up and shoot "floor rings"
@@ -144,4 +142,4 @@ public class ComputerVisionTest extends AutonomousPrimeTest {
         -Wobble may cause drag to interfere
          */
 
-    }
+}
