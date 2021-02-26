@@ -25,20 +25,23 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
         initTfod();
         tfod.activate();
         mapObjects();
-        if (tfod != null) {
-            pause(1);
-            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-            if (updatedRecognitions != null) {
-                telemetry.addData("# Object Detected", updatedRecognitions.size());
-                noLabel = updatedRecognitions.size();
-                int i = 0;
-                for (Recognition recognition : updatedRecognitions) {
-                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                            recognition.getLeft(), recognition.getTop());
-                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                            recognition.getRight(), recognition.getBottom());
-                    labelName = recognition.getLabel();
+        for(int a = 0; a<2; a++){
+            if (tfod != null) {
+                pause(1);
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    noLabel = updatedRecognitions.size();
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+                        labelName = recognition.getLabel();
+                        telemetry.update();
+                    }
                 }
             }
         }
@@ -52,16 +55,18 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                      */
                     wobbleLock(); //Servo locks to wobble
                     intakeAdvance.setPosition(0.35); //Set intake advance arm to neutral position
-                    startLaunch(0.42); //Start spinning launch wheels
+                    startLaunch(0.387); //Start spinning launch wheels
+                    //Was 0.42
                     forwardEncoder(160, 1); //Approach first PS
                     zeroBotEncoder(1); //Zero angle
                     updateDist(); //Get updated distances
-                    double rightWallDist=readRightDist-115; //Calculate how much & what direction to move in
+                    double rightWallDist=readRightDist-125; //Calculate how much & what direction to move in
+                    //Was 115, 135
                     strafeRightEncoder(rightWallDist, 0.5); //Move the distance above
                     launchAdvanceFast(); //Hit first PS
                     strafeLeftEncoder(25, 1); //Strafe to second PS
                     zeroBotEncoder(1); //Zero angle
-                    pause(0.3); //Pause for launch arm to move & wheels to spin up more
+                    pause(0.1); //Pause for arm to move
                     launchAdvanceFast(); //Hit second PS
                     strafeLeftEncoder(20, 1); //Strafe to third PS
                     zeroBotEncoder(1); //Zero angle
@@ -72,7 +77,8 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                      */
                     forwardEncoder(20, 1); //Move forward to be in line with zone
                     pause(0.2); //Pause in between movements to avoid extreme slippage
-                    strafeRightEncoder(112, 1); //Strafe right to zone
+                    strafeRightEncoder(122, 1); //Strafe right to zone
+                    //Was 112
                     pause(0.2); //Pause in between movements to avoid extreme slippage
                     wobbleRelease(); //Release wobble
                     pause(0.75); //Pause for wobble to drop
@@ -112,11 +118,13 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                      */
                     wobbleLock(); //Servo locks to wobble
                     intakeAdvance.setPosition(0.35); //Set intake advance arm to neutral position
-                    startLaunch(0.42); //Start spinning launch wheels
+                    startLaunch(0.387); //Start spinning launch wheels
+                    //Was 0.42
                     forwardEncoder(160, 1); //Approach first PS
                     zeroBotEncoder(1); //Zero angle
                     updateDist(); //Get updated distances
-                    double rightWallDist=readRightDist-115; //Calculate how much & what direction to move in
+                    double rightWallDist=readRightDist-125; //Calculate how much & what direction to move in
+                    //Was 115, 135
                     strafeRightEncoder(rightWallDist, 0.5); //Move the distance above
                     launchAdvanceFast(); //Hit first PS
                     strafeLeftEncoder(25, 1); //Strafe to second PS
@@ -133,13 +141,15 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                     wobbleGrabDown(1); //Move wobble arm down
                     forwardEncoder(75, 1); //Move forward to be in line with zone
                     pause(0.1); //Pause in between movements to avoid extreme slippage
-                    strafeRightEncoder(50, 1); //Strafe right to zone
+                    strafeRightEncoder(60, 1); //Strafe right to zone
+                    //Was 50
                     wobbleRelease(); //Release wobble
                     /*
                     SHOOT GROUND RING
                      */
                     intakeStart(1); //Start intake wheels
-                    startLaunch(0.45); //Start launch wheels at a different power
+                    startLaunch(0.4105); //Start launch wheels at a different power
+                    //Was 0.45
                     reverseEncoder(50, 1); //Move away from wobble
                     pause(0.1); //Pause in between movements to avoid extreme slippage
                     updateDist(); //Update distance sensor values
@@ -196,11 +206,13 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                      */
                     wobbleLock(); //Servo locks to wobble
                     intakeAdvance.setPosition(0.35); //Set intake advance arm to neutral position
-                    startLaunch(0.42); //Start spinning launch wheels
+                    startLaunch(0.387); //Start spinning launch wheels
+                    //Was 0.42
                     forwardEncoder(160, 1); //Approach first PS
                     zeroBotEncoder(1); //Zero angle
                     updateDist(); //Get updated distances
-                    double rightWallDist=readRightDist-115; //Calculate how much & what direction to move in
+                    double rightWallDist=readRightDist-125; //Calculate how much & what direction to move in
+                    //Was 115, 135
                     strafeRightEncoder(rightWallDist, 0.5); //Move the distance above
                     launchAdvanceFast(); //Hit first PS
                     strafeLeftEncoder(25, 1); //Strafe to second PS
@@ -215,8 +227,10 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                     SHOOT FOUR RINGS
                      */
                     intakeStart(1); //Start intake wheels
-                    startLaunch(0.4455); //Start launch wheels at a different power
-                    strafeRightEncoder(87, 1); //Move right to be in line with ring stack
+                    startLaunch(0.42); //Start launch wheels at a different power
+                    //Was 0.42
+                    strafeRightEncoder(97, 1); //Move right to be in line with ring stack
+                    //Was 87
                     zeroBotEncoder(1); //Zero angle
                     pause(0.2); //Pause in between movements to avoid extreme slippage
                     reverseEncoder(45, 0.4); //Move back to intake first ring
@@ -227,7 +241,8 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
                     pause(0.5); //Pause to have time for intake
                     launchAdvanceFast(); //Shoot second ring into high goal
                     reverseEncoder(9, 0.5); //Move back to intake third ring
-                    startLaunch(0.45); //Start launch wheels at a different power
+                    startLaunch(0.4105); //Start launch wheels at a different power
+                    //Was 0.45
                     pause(0.5); //Pause to have time for intake & time for wheels to spin up
                     launchAdvanceFast (); //Shoot third ring into high goal
                     reverseEncoder(9, 0.5); //Move back to intake fourth ring
@@ -262,7 +277,7 @@ public class UltimateGoalFast extends AutonomousPrime2020 {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = (float)0.6;
+        tfodParameters.minResultConfidence = (float)0.3;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
