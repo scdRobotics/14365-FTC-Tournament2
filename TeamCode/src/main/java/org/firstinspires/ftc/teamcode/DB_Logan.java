@@ -15,25 +15,23 @@ package org.firstinspires.ftc.teamcode;
 
 // TODO: Add distance sensor aided/automatic high goal targeting; we may need distance sensors on all sides for this to work
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name = "--Tournament2OpMode--", group = "Current")
 
-public class DB_1_7 extends OpMode {
+public class DB_Logan extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private DcMotor frontLeft = null;
@@ -58,6 +56,12 @@ public class DB_1_7 extends OpMode {
 
     protected DcMotorEx grabber = null;
     private Servo latch = null;
+
+    private DistanceSensor backDist;
+    private DistanceSensor rightDist;
+    private DistanceSensor frontDist;
+    private DistanceSensor leftDist;
+
 
     double DriveSpeed=1;
 

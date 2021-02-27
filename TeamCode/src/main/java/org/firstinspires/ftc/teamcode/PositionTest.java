@@ -17,8 +17,8 @@ public class PositionTest extends AutonomousPrime2020 {
         //strafeRightEncoder(10, 1);
 
         //strafeRightDistCheck(0.25);
-        telemetry.addData("test",test);
-        pause(2);
+        //telemetry.addData("test",test);
+        //pause(2);
         //strafeLeftEncoder(5, 0.5);
         while(test==5){
             updateDist();

@@ -73,6 +73,12 @@ public class AutonomousPrime2020 extends LinearOpMode {
     protected DistanceSensor backDist;
     protected double readBackDist;
 
+    protected DistanceSensor frontDist;
+    protected double readFrontDist;
+
+    protected DistanceSensor leftDist;
+    protected double readLeftDist;
+
     protected DistanceSensor rightDist;
     protected double readRightDist;
 
@@ -98,6 +104,12 @@ public class AutonomousPrime2020 extends LinearOpMode {
 
         rightDist=hardwareMap.get(DistanceSensor.class, "rightDist");
         readRightDist=backDist.getDistance(DistanceUnit.CM);
+
+        frontDist=hardwareMap.get(DistanceSensor.class, "frontDist");
+        readFrontDist=backDist.getDistance(DistanceUnit.CM);
+
+        leftDist=hardwareMap.get(DistanceSensor.class, "leftDist");
+        readLeftDist=backDist.getDistance(DistanceUnit.CM);
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -493,8 +505,12 @@ public class AutonomousPrime2020 extends LinearOpMode {
     public void updateDist(){
         readBackDist=backDist.getDistance(DistanceUnit.CM);
         readRightDist=rightDist.getDistance(DistanceUnit.CM);
+        readFrontDist=frontDist.getDistance(DistanceUnit.CM);
+        readLeftDist=leftDist.getDistance(DistanceUnit.CM);
         telemetry.addData("Back Dist, ",readBackDist);
         telemetry.addData("Right Dist, ",readRightDist);
+        telemetry.addData("Left Dist, ",readLeftDist);
+        telemetry.addData("Front Dist, ",readFrontDist);
         telemetry.update();
     }
     /*public void strafeRightDistCheck(double MotorPower){
