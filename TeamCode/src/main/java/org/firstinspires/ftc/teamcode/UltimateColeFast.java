@@ -1,17 +1,12 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-
 import java.util.List;
-
 // TODO: Add distance sensor checks to high goal & two other power shots; eventually, wobble delivery for 4 rings
-
 @Autonomous(name="COLE", group="linearOpMode")
 public class UltimateColeFast extends AutonomousPrime2020 {
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
@@ -25,12 +20,31 @@ public class UltimateColeFast extends AutonomousPrime2020 {
     @Override
     public void runOpMode() {
         mapObjects();
-
         waitForStart();
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 updateDist();
                 double backWallDist = readBackDist;
+                double leftWallDist = readLeftDist;
+                double rightWallDist = readRightDist;
+                double count = 0;
+                wobbleGrabDown(1);
+                pause(2);
+                while(readBackDist>backWallDist||readBackDist==backWallDist||readBackDist>backWallDist-1){
+                    strafeRightEncoder(3, 1); //Strafe right slightly closer to in line with wobble\
+                    updateDist();
+                    count++;
+                    if (count==5){
+                        break;
+                    }
+                   double newBackWallDist=readBackDist;
+//                    while (newBackWallDist>10) {
+//                        reverseEncoder(10, 1);
+//                        updateDist();
+//                    }
+//                    strafeRightEncoder(1, 1); //Strafe to ensure hook latches
+                    wobbleLatch(); //Grab the wobble
+                }
             }
         }
     }

@@ -16,12 +16,14 @@ package org.firstinspires.ftc.teamcode;
 // TODO: Add distance sensor aided/automatic high goal targeting; we may need distance sensors on all sides for this to work
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -69,6 +71,23 @@ public class DB_1_7 extends OpMode {
 
     protected final double countPerRotation=753.2;
 
+    protected DistanceSensor backDist;
+    protected double readBackDist;
+
+    protected DistanceSensor frontDist;
+    protected double readFrontDist;
+
+    protected DistanceSensor leftDist;
+    protected double readLeftDist;
+
+    protected DistanceSensor rightDist;
+    protected double readRightDist;
+
+    protected double savedRightDist;
+    protected double savedLeftDist;
+    protected double savedFrontDist;
+    protected double savedBackDist;
+
     double grabberPos = 0;
 
     @Override
@@ -89,6 +108,18 @@ public class DB_1_7 extends OpMode {
 
         grabber=hardwareMap.get(DcMotorEx.class,"grabber");
         latch=hardwareMap.get(Servo.class,"latch");
+
+        backDist=hardwareMap.get(DistanceSensor.class, "backDist");
+        readBackDist=backDist.getDistance(DistanceUnit.CM);
+
+        rightDist=hardwareMap.get(DistanceSensor.class, "rightDist");
+        readRightDist=backDist.getDistance(DistanceUnit.CM);
+
+        frontDist=hardwareMap.get(DistanceSensor.class, "frontDist");
+        readFrontDist=backDist.getDistance(DistanceUnit.CM);
+
+        leftDist=hardwareMap.get(DistanceSensor.class, "leftDist");
+        readLeftDist=backDist.getDistance(DistanceUnit.CM);
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -159,9 +190,50 @@ public class DB_1_7 extends OpMode {
 
         if (gamepad1.dpad_left) {
             initialAngle = getAngle();
+            updateDist();
+            savedBackDist=readBackDist;
+            savedFrontDist=readFrontDist;
+            savedRightDist=readBackDist;
+            savedLeftDist=readFrontDist;
+
+
+            double count = 0;
+            if(readBackDist>500 && readFrontDist>500 || readRightDist>500 && readLeftDist>500 && count<4){
+                updateDist();
+                count++;
+            }
+            if(count==4){
+                count=0;
+                telemetry.addData("Angle Get: ", "Failed!");
+                telemetry.update();
+            }
         }
         if (gamepad1.dpad_right){
+            updateDist();
             zeroBotEncoder(1);
+            if(savedRightDist<savedLeftDist){
+                double moveDist = readRightDist - savedRightDist;
+                strafeRightEncoder(moveDist, 1);
+            }else{
+                double moveDist = readLeftDist - savedLeftDist;
+                strafeRightEncoder(moveDist, 1);
+            }
+            zeroBotEncoder(1);
+            if(savedBackDist<savedFrontDist){
+                double moveDist = readBackDist - savedBackDist;
+                reverseEncoder(moveDist, 1);
+            }else{
+                double moveDist = readFrontDist - savedFrontDist;
+                reverseEncoder(moveDist, 1);
+            }
+            zeroBotEncoder(1);
+        }
+
+        if(gamepad1.a){
+            reverseEncoder(20, 1);
+        }
+        if(gamepad1.b){
+            strafeRightEncoder(20, 1);
         }
 
 
@@ -257,6 +329,17 @@ public class DB_1_7 extends OpMode {
     @Override
     public void stop() {}
 
+    public void updateDist(){
+        readBackDist=backDist.getDistance(DistanceUnit.CM);
+        readRightDist=rightDist.getDistance(DistanceUnit.CM);
+        readFrontDist=frontDist.getDistance(DistanceUnit.CM);
+        readLeftDist=leftDist.getDistance(DistanceUnit.CM);
+        telemetry.addData("Back Dist, ",readBackDist);
+        telemetry.addData("Right Dist, ",readRightDist);
+        telemetry.addData("Left Dist, ",readLeftDist);
+        telemetry.addData("Front Dist, ",readFrontDist);
+        telemetry.update();
+    }
     public void zeroBotEncoder(double MotorPower){
         double newAngle = getAngle();
         telemetry.addData("zeroBot Initial ",initialAngle);
@@ -330,6 +413,60 @@ public class DB_1_7 extends OpMode {
         frontLeft.setTargetPosition((int)(cmOffset*countPerRotation));
         frontRight.setTargetPosition((int)(cmOffset*countPerRotation));
         backLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
+        backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        backRight.setPower(MotorPower);
+        frontRight.setPower(MotorPower);
+        backLeft.setPower(MotorPower);
+        frontLeft.setPower(MotorPower);
+
+        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()){
+
+        }
+    }
+    public void strafeRightEncoder(double pos, double MotorPower){
+        frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+
+        double cmOffset = pos/25;
+
+        frontLeft.setTargetPosition((int)(cmOffset*countPerRotation));
+        frontRight.setTargetPosition((int)(cmOffset*countPerRotation));
+        backLeft.setTargetPosition((int)(-cmOffset*countPerRotation));
+        backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        backRight.setPower(MotorPower);
+        frontRight.setPower(MotorPower);
+        backLeft.setPower(MotorPower);
+        frontLeft.setPower(MotorPower);
+
+        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()){
+
+        }
+    }
+    public void reverseEncoder(double pos, double MotorPower){
+        frontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        backLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        frontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        backRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+
+        double cmOffset = pos/25;
+
+        frontLeft.setTargetPosition((int)(cmOffset*countPerRotation));
+        frontRight.setTargetPosition((int)(-cmOffset*countPerRotation));
+        backLeft.setTargetPosition((int)(cmOffset*countPerRotation));
         backRight.setTargetPosition((int)(-cmOffset*countPerRotation));
 
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
