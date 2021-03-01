@@ -28,22 +28,52 @@ public class UltimateColeFast extends AutonomousPrime2020 {
                 double leftWallDist = readLeftDist;
                 double rightWallDist = readRightDist;
                 double count = 0;
-                wobbleGrabDown(1);
-                pause(2);
-                while(readBackDist>backWallDist||readBackDist==backWallDist||readBackDist>backWallDist-1){
-                    strafeRightEncoder(3, 1); //Strafe right slightly closer to in line with wobble\
-                    updateDist();
-                    count++;
-                    if (count==5){
-                        break;
+                wobbleGrabDown(1);//This is just for testing, will probably be somewhere else in the actual code
+                pause(7);//Waiting for the wobble grabber to be in place
+//                while(readBackDist>backWallDist||readBackDist==backWallDist||readBackDist>backWallDist-1){
+//                    strafeRightEncoder(3, 1); //Strafe right slightly closer to in line with wobble
+//                    updateDist();
+//                    count++;
+//                    if (count==5){
+//                        break;
+//                    }
+                while(readRightDist>=10 && readBackDist >=30){ //When the wobble is detected (With a failsafe to avoid being too close to the wall)
+                    strafeRightEncoder(3, 1);  //Strafe right in small increments
+                    updateDist(); //Update distance sensor values
+                    count++; //Increase the count variable
+                    if(count==5){ //If you've strafed 13 times (missed the wobble)...
+                        break; //...then break out of the loop
                     }
-                   double newBackWallDist=readBackDist;
+                }
+                while(readBackDist>10) {
+                    reverseEncoder(5,1); //Goes closer to the robot, until it's in range, this value may have to change
+                    updateDist();
+                }
+                if(readBackDist<10) { //If the robot is too close to the wobble it will readjust to be in the right place
+                    double reAdjust = 10 - readBackDist; //Subtracting 10 gives us how far to go
+                    forwardEncoder(reAdjust, 1);
+                    updateDist();
+                }
 //                    while (newBackWallDist>10) {
 //                        reverseEncoder(10, 1);
 //                        updateDist();
 //                    }
 //                    strafeRightEncoder(1, 1); //Strafe to ensure hook latches
-                    wobbleLatch(); //Grab the wobble
+                wobbleLatch(); //Grab the wobble
+                forwardEncoder(5,1);
+                updateDist();
+                if (readBackDist>12) { //checking to make sure it has the wobble, may have to adjust this value
+                    reverseEncoder(4,1); //Going back towards the wobble, since we already went forwad 5, the 4 is to cover most of the distance without overdoing it
+                    while(readBackDist>10) {
+                        reverseEncoder(2,1);//May need to adjust
+                        updateDist();
+                    }
+                    wobbleLatch();
+                }
+                forwardEncoder(5,1);
+                updateDist();
+                if (readBackDist>12) { //If the robot doesn't have the wobble at this point, it just goes to park, instead of dropping off a wobble it doesn't have
+                    forwardEncoder(160, 1);//This value may change
                 }
             }
         }

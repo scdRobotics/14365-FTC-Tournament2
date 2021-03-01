@@ -211,19 +211,21 @@ public class DB_1_7 extends OpMode {
         if (gamepad1.dpad_right){
             updateDist();
             zeroBotEncoder(1);
-            if(savedRightDist<savedLeftDist){
+            if(savedRightDist>500){
+                double moveDist = 182.88-(readLeftDist+37);
+                strafeRightEncoder(moveDist, 1);
+            }else{
                 double moveDist = readRightDist - savedRightDist;
                 strafeRightEncoder(moveDist, 1);
-            }else{
-                double moveDist = readLeftDist - savedLeftDist;
-                strafeRightEncoder(moveDist, 1);
             }
+
             zeroBotEncoder(1);
-            if(savedBackDist<savedFrontDist){
-                double moveDist = readBackDist - savedBackDist;
+
+            if(savedBackDist>500){
+                double moveDist = 365.76-(readFrontDist+37);
                 reverseEncoder(moveDist, 1);
             }else{
-                double moveDist = readFrontDist - savedFrontDist;
+                double moveDist = readBackDist - savedBackDist;
                 reverseEncoder(moveDist, 1);
             }
             zeroBotEncoder(1);
