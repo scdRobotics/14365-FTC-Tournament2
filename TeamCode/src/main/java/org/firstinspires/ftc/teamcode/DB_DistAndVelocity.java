@@ -33,9 +33,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "--Tournament2OpMode--", group = "Current")
+@TeleOp(name = "--TestOpMode--", group = "Current")
 
-public class DB_1_7 extends OpMode {
+public class DB_DistAndVelocity extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private DcMotor frontLeft = null;
@@ -45,15 +45,15 @@ public class DB_1_7 extends OpMode {
 
     private DcMotor intake = null;
 
-    private DcMotor launchLeft = null;
-    private DcMotor launchRight = null;
+    private DcMotorEx launchLeft = null;
+    private DcMotorEx launchRight = null;
 
     private boolean running = true;
     private boolean pressed = false;
 
     private boolean latched = false;
 
-    private double launchPower = 0.42;
+    private double launchVelocity = 0.00333;
 
     private double pusherPos = 0.35;
     private Servo pusher = null;
@@ -93,6 +93,9 @@ public class DB_1_7 extends OpMode {
     protected double idealFrontWall=209.0;
     protected double idealBackWall=109.8;
 
+    public static final double TICKS_PER_REV = 28;
+    public static final double MAX_RPM = 6000;
+
     double grabberPos = 0;
 
     @Override
@@ -106,8 +109,8 @@ public class DB_1_7 extends OpMode {
 
         intake = hardwareMap.get(DcMotor.class, "intake");
 
-        launchLeft = hardwareMap.get(DcMotor.class, "launchLeft");
-        launchRight = hardwareMap.get(DcMotor.class, "launchRight");
+        launchLeft = hardwareMap.get(DcMotorEx.class, "launchLeft");
+        launchRight = hardwareMap.get(DcMotorEx.class, "launchRight");
 
         pusher = hardwareMap.get(Servo.class, "intakeAdvance");
 
@@ -157,6 +160,11 @@ public class DB_1_7 extends OpMode {
         pusher.setPosition(pusherPos);
         grabber.setMode(DcMotor.RunMode.RESET_ENCODERS);
         grabber.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        launchLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        launchLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launchRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        launchRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
@@ -289,28 +297,28 @@ public class DB_1_7 extends OpMode {
         // y:             KILL EVERYTHING
 
         if(gamepad2.dpad_up) {
-            if(launchPower < 0.75) {
-                launchPower += 0.00005;
+            if(launchVelocity < 0.75) {
+                launchVelocity += 0.00005;
             }
         }
         else if (gamepad2.dpad_down) {
-            launchPower -= 0.00005;
+            launchVelocity -= 0.00005;
         }
 
         else if(gamepad2.dpad_right) {
-            if(launchPower < 0.75) {
-                launchPower += 0.0005;
+            if(launchVelocity < 0.75) {
+                launchVelocity += 0.0005;
             }
         }
         else if (gamepad2.dpad_left) {
-            launchPower -= 0.0005;
+            launchVelocity -= 0.0005;
         }
 
         if(gamepad2.y) {
-            launchPower = 0.387;
+            launchVelocity = 0.387;
         }
         else if(gamepad2.b){
-            launchPower = 0.42;
+            launchVelocity = 0.42;
         }
 
         /*if(gamepad2.a){
@@ -320,13 +328,13 @@ public class DB_1_7 extends OpMode {
             launch();
         }*/
 
-        telemetry.addData("launchPower",launchPower);
-        launchLeft.setPower(-(launchPower - (gamepad2.left_trigger / 2)));
-        launchRight.setPower((launchPower - (gamepad2.left_trigger / 2)));
+        telemetry.addData("launchVelocity",launchVelocity);
+        launchLeft.setVelocity(-(launchVelocity - (gamepad2.left_trigger / 2)));
+        launchRight.setVelocity((launchVelocity - (gamepad2.left_trigger / 2)));
 
         if(!gamepad2.y) {
-            launchLeft.setPower(-(launchPower - (gamepad1.left_trigger / 2)));
-            launchRight.setPower((launchPower - (gamepad1.left_trigger / 2)));
+            launchLeft.setPower(-(launchVelocity - (gamepad1.left_trigger / 2)));
+            launchRight.setPower((launchVelocity - (gamepad1.left_trigger / 2)));
             if(gamepad2.x || gamepad1.x) {
                 pusherPos = 0.2;
             } else {
